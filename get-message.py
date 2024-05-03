@@ -17,20 +17,19 @@ def delete_message(handle):
     except ClientError as e:
         print(e.response['Error']['Message'])
 
-messages_list = [] # create list of messages
-create_list = {} 
 
 def get_message():
+
+    gett_message = [] # create list of messages
+    sort = [] 
     
-    for i in range(10):
-        try:
+    try:
+        while len(gett_message)<10:
         # Receive message from SQS queue. Each message has two MessageAttributes: order and word
         # You want to extract these two attributes to reassemble the message
             response = sqs.receive_message(
                 QueueUrl=url,
-                AttributeNames=[
-                    'All'
-                ],
+                AttributeNames=['All'],
                 MaxNumberOfMessages=1,
                 MessageAttributeNames=[
                     'All'
@@ -38,29 +37,30 @@ def get_message():
             )
         # Check if there is a message in the queue or not
             if "Messages" in response:
-            # extract the two message attributes you want to use as variables
-            # extract the handle for deletion later
-                order = response['Messages'][0]['MessageAttributes']['order']['StringValue']
-                word = response['Messages'][0]['MessageAttributes']['word']['StringValue']
-                handle = response['Messages'][0]['ReceiptHandle']
-
-                create_list.append(handle)
-                messages_list[order] = word
-
-            # Print the message attributes - this is what you want to work with to reassemble the message
-                print(f"Order: {order}")
-                print(f"Word: {word}")
-
-        # If there is no message in the queue, print a message and exit    
+                gett_message.extend(response['Messages'])
             else:
                 print("No message in the queue")
-                exit(1)
-            
-    # Handle any errors that may occur connecting to SQS
-        except ClientError as e:
-            print(e.response['Error']['Message'])
 
-    print(messages_list)
+            
+        for m in gett_message:
+            order = m['MessageAttributes']['order']['StringValue']
+            word = m['MessageAttributes']['order']['StringValue']
+            
+            sort.append({'order': int(order), 'word': word})
+
+        sort = sorted(get_messages, key=lambda x: x['order'])
+        sentence = ""
+        for item in sort():
+            sentence += item['word'] + ' '
+        print(sentence)
+
+        for _, _, handle in sorted_messages:
+            delete_message(handle)
+            
+    # Handle errors
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+        exit(1) # exit 
 
 # Trigger the function
 if __name__ == "__main__":
