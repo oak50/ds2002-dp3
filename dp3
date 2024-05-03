@@ -67,5 +67,5 @@ def get_messages():
 if __name__ == "__main__":
     get_messages()
 
-# had issues with the delete_messages() function, which appeared to permamanetly delete all messages
+# had issues with the delete_messages() function, which appeared to permanently delete all messages
 # in the queue. Went to office hours and was unable to resolve. Was still able to get the phrase from previous attempts.
