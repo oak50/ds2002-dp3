@@ -56,10 +56,10 @@ def get_messages():
             print(e.response['Error']['Message'])
 
         # order the dictionary using order keys. Put into order list
-            order = sorted(word_order_dict.keys(), key=lambda x: word_order_dict[x])
+            orders = sorted(word_order_dict.keys(), key=lambda x: word_order_dict[x])
 
         # join "order" to make sentence
-            sentence = ' '.join(order)
+            sentence = ' '.join(orders)
             print(sentence)
 
 # Trigger the function
