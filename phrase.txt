@@ -4,3 +4,6 @@
 # Put your reassembled phrase here:
 
 people who know what they're talking about don't need powerpoint
+
+# had issues with the delete_messages() function, which appeared to permamanetly delete all messages
+# in the queue. Went to office hours and was unable to resolve. Was still able to get the phrase from previous attempts.
