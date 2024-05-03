@@ -32,7 +32,7 @@ def get_messages():
                     'All'
             ]
         )
-
+        
         # create dictionary, which we'll use to match order attributes with their correpsonding words
             word_order_dict = {}
 
@@ -65,3 +65,6 @@ def get_messages():
 # Trigger the function
 if __name__ == "__main__":
     get_messages()
+
+# had issues with the delete_messages() function, which appeared to permamanetly delete all messages
+# in the queue. Went to office hours and was unable to resolve. Was still able to get the phrase from previous attempts.
