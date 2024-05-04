@@ -20,8 +20,7 @@ def delete_message(handle):
 
 def get_message():
 
-    gett_message = [] # create list of messages
-    sort = [] 
+   
     
     try:
         while len(gett_message)<10:
@@ -46,21 +45,12 @@ def get_message():
             order = m['MessageAttributes']['order']['StringValue']
             word = m['MessageAttributes']['order']['StringValue']
             
-            sort.append({'order': int(order), 'word': word})
+        
 
-        sort = sorted(get_messages, key=lambda x: x['order'])
-        sentence = ""
-        for item in sort():
-            sentence += item['word'] + ' '
-        print(sentence)
-
-        for _, _, handle in sorted_messages:
-            delete_message(handle)
             
     # Handle errors
     except ClientError as e:
         print(e.response['Error']['Message'])
-        exit(1) # exit 
 
 # Trigger the function
 if __name__ == "__main__":
